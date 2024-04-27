@@ -2,4 +2,3 @@ tensorflow
 streamlit
 matplotlib
 load_model
-tensorflow.keras.models
