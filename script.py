@@ -14,7 +14,7 @@ generator = model.compile(optimizer=optimizer, loss='sparse_categorical_crossent
 def main():
     st.title("avatarGen")
 
-    st.button("Generate"):
+  if st.button("Generate"):
         noise = tf.random.normal([1, 100])
         generated_image = model(noise)
         print("Generated image shape: ", generated_image.shape)
