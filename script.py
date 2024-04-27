@@ -1,4 +1,4 @@
-from tensorflow.keras.models import load_model
+from keras.models import load_model
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import streamlit as st
