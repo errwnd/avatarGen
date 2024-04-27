@@ -15,10 +15,10 @@ def main():
     st.title("avatarGen")
 
   if st.button("Generate"):
-        noise = tf.random.normal([1, 100])
-        generated_image = model(noise)
-        print("Generated image shape: ", generated_image.shape)
-        z=plt.imshow(generated_image[0,:,:,:])
-        st.image('z')
+    noise = tf.random.normal([1, 100])
+    generated_image = model(noise)
+    print("Generated image shape: ", generated_image.shape)
+    z=plt.imshow(generated_image[0,:,:,:])
+    st.image('z')
 if __name__ == "__main__":
     main()
