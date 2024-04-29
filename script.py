@@ -8,11 +8,7 @@ import streamlit as st
 #generator = model.compile(optimizer='Adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 #generator=model.compile(optimizer="Adam",metrics=['accuracy'],)
-for layer in model.layers:
-    if isinstance(layer, tf.keras.layers.Conv2DTranspose):
-        layer_config = layer.get_config()
-        layer_config.pop('groups', None)
-        layer.__init__(**layer_config)
+
 
 
 
