@@ -41,9 +41,9 @@ def run_app(model_path='face_generator_Final_50.h5'):
     model = load_face_generator_model(model_path)
     
     st.title("Image Generator")
-    st.write("Generate custom images using a trained model.")
+    st.write(" ")
     
-    size = st.slider("Select Image Size", min_value=10, max_value=100, value=36)
+    size = st.slider("Select Level of pixelation ", min_value=10, max_value=100, value=100)
     
     if st.button("Generate"):
         generated_image_resized = generate_image(model, size)
