@@ -2,4 +2,4 @@ tensorflow
 flask
 streamlit
 matplotlib
-keras = 3.0.0
+keras
