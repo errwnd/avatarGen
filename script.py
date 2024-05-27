@@ -9,7 +9,7 @@ import base64
 plt.switch_backend('Agg')
 
 # Load model
-model_path = 'face_generator_02_50.h5'  # Update this path
+model_path = 'faces.h5'  # Update this path
 model = load_model(model_path)
 
 st.title("AvatarGen")
