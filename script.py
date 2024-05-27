@@ -23,7 +23,7 @@ def normalize_image(image):
 
 def plot_image(generated_image, size):
     normalized_image = normalize_image(generated_image[0]).numpy()
-    fig, ax = plt.subplots(figsize=(size / 10, size / 10))
+    fig, ax = plt.subplots(figsize=(3.6, 3.6))  # Keep the plot size small
     ax.imshow(normalized_image)
     ax.axis('off')
     img_io = io.BytesIO()
@@ -43,13 +43,14 @@ def run_app(model_path='face_generator_Final_50.h5'):
     st.title("Image Generator")
     st.write(" ")
     
-    size = st.slider("Select Level of pixelation ", min_value=10, max_value=100, value=100)
+    size = st.slider("Select Level of Pixelation", min_value=10, max_value=100, value=100)
     
     if st.button("Generate"):
         generated_image_resized = generate_image(model, size)
         img_io = plot_image(generated_image_resized, size)
         
-        st.image(normalize_image(generated_image_resized[0]).numpy(), use_column_width=True, caption="Generated Image")
+        # Adjust the display size by setting use_column_width to False and specifying width
+        st.image(normalize_image(generated_image_resized[0]).numpy(), width=200, caption="Generated Image")
         
         download_link = create_download_link(img_io)
         st.markdown(download_link, unsafe_allow_html=True)
