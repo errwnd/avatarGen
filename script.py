@@ -17,9 +17,14 @@ def generate_image(model, size):
     generated_image_resized = tf.image.resize(generated_image, [size, size])
     return generated_image_resized
 
+def normalize_image(image):
+    image = (image - tf.reduce_min(image)) / (tf.reduce_max(image) - tf.reduce_min(image))
+    return image
+
 def plot_image(generated_image, size):
+    normalized_image = normalize_image(generated_image[0]).numpy()
     fig, ax = plt.subplots(figsize=(size / 10, size / 10))
-    ax.imshow(generated_image[0].numpy())
+    ax.imshow(normalized_image)
     ax.axis('off')
     img_io = io.BytesIO()
     plt.savefig(img_io, format='png', bbox_inches='tight', pad_inches=0)
@@ -44,7 +49,7 @@ def run_app(model_path='face_generator_Final_50.h5'):
         generated_image_resized = generate_image(model, size)
         img_io = plot_image(generated_image_resized, size)
         
-        st.image(generated_image_resized[0].numpy(), use_column_width=True, caption="Generated Image")
+        st.image(normalize_image(generated_image_resized[0]).numpy(), use_column_width=True, caption="Generated Image")
         
         download_link = create_download_link(img_io)
         st.markdown(download_link, unsafe_allow_html=True)
