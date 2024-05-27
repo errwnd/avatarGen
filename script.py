@@ -32,7 +32,7 @@ def create_download_link(img_io):
     href = f'<a href="data:file/png;base64,{b64}" download="generated_image.png">Download Image</a>'
     return href
 
-def run_app(model_path='face_generator_02_50.h5'):
+def run_app(model_path='face_generator_Final_50.h5'):
     model = load_face_generator_model(model_path)
     
     st.title("Image Generator")
