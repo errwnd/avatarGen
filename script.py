@@ -8,40 +8,46 @@ import base64
 # Set the matplotlib backend to 'Agg' to avoid threading issues
 plt.switch_backend('Agg')
 
-# Load model
-model_path = 'face_generator_Final_50.h5'  # Update this path
-model = load_model(model_path)
+def load_face_generator_model(model_path):
+    return load_model(model_path)
 
-st.title("AvatarGen")
-st.write("Generate custom avatars using a trained model.")
-
-# Slider for adjusting the image size
-size = st.slider("Select Image Size", min_value=10, max_value=100, value=36)
-
-# Button to generate image
-if st.button("Generate"):
-    # Generate image
+def generate_image(model, size):
     noise = tf.random.normal([1, 100])
     generated_image = model(noise)
-
-    # Resize the generated image to the specified size
     generated_image_resized = tf.image.resize(generated_image, [size, size])
+    return generated_image_resized
 
-    # Plot the generated image
-    fig, ax = plt.subplots(figsize=(size / 10, size / 10))  # Adjust figure size to match the image dimensions
-    ax.imshow(generated_image_resized[0, :, :, :])
+def plot_image(generated_image, size):
+    fig, ax = plt.subplots(figsize=(size / 10, size / 10))
+    ax.imshow(generated_image[0, :, :, :])
     ax.axis('off')
-
-    # Save the plot to a BytesIO object
     img_io = io.BytesIO()
     plt.savefig(img_io, format='png', bbox_inches='tight', pad_inches=0)
     img_io.seek(0)
     plt.close(fig)
+    return img_io
 
-    # Display the image in Streamlit
-    st.image(generated_image_resized[0, :, :, :], use_column_width=True, caption="Generated Image")
-
-    # Provide a download link for the image
+def create_download_link(img_io):
     b64 = base64.b64encode(img_io.getvalue()).decode()
     href = f'<a href="data:file/png;base64,{b64}" download="generated_image.png">Download Image</a>'
-    st.markdown(href, unsafe_allow_html=True)
+    return href
+
+def run_app(model_path='face_generator_02_50.h5'):
+    model = load_face_generator_model(model_path)
+    
+    st.title("Image Generator")
+    st.write("Generate custom images using a trained model.")
+    
+    size = st.slider("Select Image Size", min_value=10, max_value=100, value=36)
+    
+    if st.button("Generate"):
+        generated_image_resized = generate_image(model, size)
+        img_io = plot_image(generated_image_resized, size)
+        
+        st.image(generated_image_resized[0, :, :, :], use_column_width=True, caption="Generated Image")
+        
+        download_link = create_download_link(img_io)
+        st.markdown(download_link, unsafe_allow_html=True)
+
+if __name__ == '__main__':
+    run_app()
