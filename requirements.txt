@@ -3,5 +3,5 @@ flask
 streamlit
 matplotlib
 keras
-cv2
+opencv-python
 numpy
