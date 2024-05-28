@@ -23,7 +23,7 @@ def normalize_image(image):
 
 def plot_image(generated_image, size):
     normalized_image = normalize_image(generated_image[0]).numpy()
-    fig, ax = plt.subplots(figsize=(3.6, 3.6))  # Keep the plot size small
+    fig, ax = plt.subplots(figsize=(5, 5))  # Larger figure size for better quality
     ax.imshow(normalized_image)
     ax.axis('off')
     img_io = io.BytesIO()
@@ -37,19 +37,19 @@ def create_download_link(img_io):
     href = f'<a href="data:file/png;base64,{b64}" download="generated_image.png">Download Image</a>'
     return href
 
-def run_app(model_path='Final.h5'):
+def run_app(model_path='face_generator_02_50.h5'):
     model = load_face_generator_model(model_path)
     
     st.title("Image Generator")
-    st.write(" ")
+    st.write("Generate custom images using a trained model.")
     
-    size = st.slider("Select Level of Pixelation", min_value=10, max_value=100, value=100)
+    size = st.slider("Select Image Size", min_value=64, max_value=512, value=128)
     
     if st.button("Generate"):
         generated_image_resized = generate_image(model, size)
         img_io = plot_image(generated_image_resized, size)
         
-        # Adjust the display size by setting use_column_width to False and specifying width
+        # Display the image at a smaller size for better visual quality
         st.image(normalize_image(generated_image_resized[0]).numpy(), width=200, caption="Generated Image")
         
         download_link = create_download_link(img_io)
