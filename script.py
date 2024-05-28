@@ -45,7 +45,7 @@ def create_download_link(img_io):
     '''
     return href
 
-def run_app(model_path='Final.h5'):
+def run_app(model_path='face_generator_REFINED_120.h5'):
     model = load_face_generator_model(model_path)
     
     st.title("Image Generator")
