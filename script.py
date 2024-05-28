@@ -23,7 +23,7 @@ def normalize_image(image):
 
 def plot_image(generated_image, size):
     normalized_image = normalize_image(generated_image[0]).numpy()
-    fig, ax = plt.subplots(figsize=(5, 5))  # Larger figure size for better quality
+    fig, ax = plt.subplots(figsize=(3.6, 3.6))  # Larger figure size for better quality
     ax.imshow(normalized_image)
     ax.axis('off')
     img_io = io.BytesIO()
